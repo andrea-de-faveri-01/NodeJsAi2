@@ -1,6 +1,7 @@
+const { deleteFile } = require("../../middlewares/delete");
 const Ai = require("./ais.model");
 
-const getAllAis = async (req, res) => {
+const getAllAis = async (req, res, next) => {
   try {
     const ais = await Ai.find();
     return res.json(ais);
@@ -9,7 +10,7 @@ const getAllAis = async (req, res) => {
   }
 };
 
-const getAiById = async (req, res) => {
+const getAiById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const ai = await Ai.findById(id);
@@ -25,10 +26,26 @@ const getAiById = async (req, res) => {
   }
 };
 
-const getAiByCategory = async (req, res) => {
+const getAiByName = async (req, res, next) => {
+  try {
+    const { name } = req.params;
+
+    const ai = await Ai.findOne({ name: name });
+
+    if (!ai) {
+      return res.json("I couldn't find the AI, that Ai doesn't exist in this database");
+    }
+
+    return res.json(libro);
+  } catch (error) {
+    return next(error)
+  }
+};
+
+const getAiByCategory = async (req, res, next) => {
   try {
     const { category } = req.params;
-    const ai = await Ai.findOne({ category });
+    const ai = await Ai.findOne({ category: category });
 
     if (!ai) {
       return res.json(
@@ -55,9 +72,94 @@ const getAiBeforeYear = async (req, res) => {
   }
 };
 
+const postAi = async (req, res, next) => {
+
+  try {
+
+    const newAi = new Ai(req.body);
+
+    if (req.file) {
+      newAi.logo = req.file.path;
+    }
+
+    await newAi.save();
+
+    return res.json(newAi);
+
+  } catch (error) {
+    return next(error)
+  }
+
+}
+
+const deleteAi = async (req, res, next) => {
+
+  try {
+    
+    const { idAi } = req.params;
+
+    const aiDeleted = await Ai.findByIdAndDelete(idAi);
+
+    return res.status(200).json(aiDeleted);
+
+
+  } catch (error) {
+    return next(error)
+  }
+
+}
+
+const deleteAiByName = async (req, res, next) => {
+
+  try {
+    
+    const { name } = req.params;
+
+    const aiDeleted = await Ai.findOneAndDelete({name: name});
+
+    return res.status(200).json(aiDeleted);
+
+
+  } catch (error) {
+    return next(error)
+  }
+
+}
+
+const updateAi = async (req, res, next) => {
+
+  try {
+    
+
+    const { id } = req.params;
+
+
+    if (req.file) {
+      const oldAi = await Ai.findById(id);
+      if (oldAi.logo) {
+        deleteFile(oldAi.logo);
+      }
+      req.body.logo = req.file.path;
+    }
+    
+    const aiUpdated = await Libro.findByIdAndUpdate(id, req.body, {new: true});
+
+    return res.status(200).json(aiUpdated);
+
+  } catch (error) {
+    return next(error)
+  }
+
+}
+
 module.exports = {
   getAllAis,
   getAiById,
+  getAiByName,
   getAiByCategory,
   getAiBeforeYear,
+  postAi,
+  deleteAi,
+  deleteAiByName,
+  updateAi
 };

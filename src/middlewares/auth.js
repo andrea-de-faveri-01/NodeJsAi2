@@ -37,7 +37,7 @@ const isAdmin = async (req, res, next) => {
     const validToken = verifyJwt(parsedToken);
     const userLogued = await User.findById(validToken.id);
 
-    if (userLogued.rol === "admin") {
+    if (userLogued.level === "admin") {
       userLogued.password = null;
       req.user = userLogued;
       next();

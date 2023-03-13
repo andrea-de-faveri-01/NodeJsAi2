@@ -64,4 +64,13 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { signUp, login, modifyUser };
+const getAllUsers = async(req, res, next) => {
+  try {
+    const users = await User.find();
+    return res.json(users);
+  } catch (error) {
+    return res.json("Error collecting the users", error)
+  }
+};
+
+module.exports = { signUp, login, modifyUser, getAllUsers };

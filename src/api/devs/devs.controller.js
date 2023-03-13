@@ -7,7 +7,7 @@ const postDev = async (req, res, next) => {
         const newDev = await new Dev(req.body);
 
         if (req.file) {
-            newLibro.caratula = req.file.path;
+            newDev.logo = req.file.path;
           }
       
         await newDev.save();
