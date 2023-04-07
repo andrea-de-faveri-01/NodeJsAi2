@@ -5,6 +5,6 @@ const { postDev, getDevs } = require("./devs.controller");
 const DevsRoutes = require("express").Router();
 
 DevsRoutes.post("/",  [isAdmin], upload.single("logo"), postDev);
-DevsRoutes.get("/", [isAuth], getDevs);
+DevsRoutes.get("/", getDevs);
 
 module.exports = DevsRoutes;
