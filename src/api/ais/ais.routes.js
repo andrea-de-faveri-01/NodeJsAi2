@@ -5,13 +5,13 @@ const { getAllAis, getAiById, getAiByName, getAiByCategory, getAiBeforeYear, pos
 const aisRoutes = require("express").Router();
 
 aisRoutes.get("/", getAllAis);
-aisRoutes.get("/:id", [isAuth], getAiById);
-aisRoutes.get("/name/:name", [isAuth], getAiByName);
-aisRoutes.get("/category/:category", [isAuth], getAiByCategory);
-aisRoutes.get("/beforeYear/:year", [isAuth], getAiBeforeYear);
-aisRoutes.post("/", [isAdmin], upload.single("logo"), postAi);
-aisRoutes.delete("/:idAi", [isAdmin], deleteAi);
-aisRoutes.delete("/deleteByName/:name", [isAdmin], deleteAiByName);
-aisRoutes.put("/:id", [isAdmin], upload.single("logo"), updateAi);
+aisRoutes.get("/:id", getAiById);
+aisRoutes.get("/name/:name", getAiByName);
+aisRoutes.get("/category/:category", getAiByCategory);
+aisRoutes.get("/beforeYear/:year", getAiBeforeYear);
+aisRoutes.post("/", upload.single("logo"), postAi);
+aisRoutes.delete("/:idAi", deleteAi);
+aisRoutes.delete("/deleteByName/:name", deleteAiByName);
+aisRoutes.put("/:id", upload.single("logo"), updateAi);
 
 module.exports = aisRoutes;
