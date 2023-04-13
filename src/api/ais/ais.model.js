@@ -6,7 +6,7 @@ const aiSchema = new mongoose.Schema(
       category: [{ 
         type: String,
         required: true,
-        enum: ["chatBot", "text to image", "software tool"],
+        enum: ["ChatBot", "Text To Image", "Software Tool"],
     }],
       logo: { type: String },
       year: { type: Number },
