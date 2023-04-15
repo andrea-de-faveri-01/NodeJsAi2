@@ -36,7 +36,7 @@ const getAiByName = async (req, res, next) => {
       return res.json("I couldn't find the AI, that Ai doesn't exist in this database");
     }
 
-    return res.json(libro);
+    return res.json(ai);
   } catch (error) {
     return next(error)
   }
@@ -142,7 +142,7 @@ const updateAi = async (req, res, next) => {
       req.body.logo = req.file.path;
     }
     
-    const aiUpdated = await Libro.findByIdAndUpdate(id, req.body, {new: true});
+    const aiUpdated = await Ai.findByIdAndUpdate(id, req.body, {new: true});
 
     return res.status(200).json(aiUpdated);
 
