@@ -5,7 +5,7 @@ const devSchema = mongoose.Schema({
   year: { type: Number, required: true },
   logo: { type: String },
   link: { type: String },
-  ais: [{ type: mongoose.Types.ObjectId, ref: "ais" }],
+  ais: [{ type: mongoose.Schema.Types.ObjectId, ref: "ais" }],
 });
 
 const Dev = mongoose.model("devs", devSchema);
