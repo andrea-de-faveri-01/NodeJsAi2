@@ -10,7 +10,7 @@ aisRoutes.get("/name/:name", getAiByName);
 aisRoutes.get("/category/:category", getAiByCategory);
 aisRoutes.get("/beforeYear/:year", getAiBeforeYear);
 aisRoutes.post("/", upload.single("logo"), postAi);
-aisRoutes.delete("/:idAi", deleteAi);
+aisRoutes.delete("/:id", deleteAi);
 aisRoutes.delete("/deleteByName/:name", deleteAiByName);
 aisRoutes.put("/:id", upload.single("logo"), updateAi);
 
